@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Final Project</title>
+</head>
+<body>
+
+  <div class="slidecontainer" id="fovslider">
+    <p class="slidetext">FOV</p>
+    <input type="range" min="1" max="180" class="slider" id="fovRange">
+    <p id="fovNum"></p>
+  </div>
+
+  <div class="slidecontainer" id="nearslider">
+    <p class="slidetext">NEAR</p>
+    <input type="range" min="1" max="100" class="slider" id="nearRange">
+    <p id="nearNum"></p>
+  </div>
+
+  <div class="slidecontainer" id="farslider">
+    <p class="slidetext">FAR</p>
+    <input type="range" min="1" max="100" class="slider" id="farRange">
+    <p id="farNum"></p>
+  </div>
+
+  <script src="js/three.js/build/three.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
