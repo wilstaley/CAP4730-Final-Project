@@ -8,7 +8,13 @@
   <title>Final Project</title>
 </head>
 <body>
-  <h1>Testing...</h1>
+
+  <div id="meshbtn">
+    <select id="model-select">
+      <option value="torus" selected>Torus</option>
+      <option value="text">Text</option>
+    </select>
+  </div>
 
   <div class="slidecontainer" id="fovslider">
     <p class="slidetext">FOV</p>
@@ -28,7 +34,17 @@
     <p id="farNum"></p>
   </div>
 
+  <div class="slidecontainer" id="wireframe">
+    <p class="slidetext">WIREFRAME</p>
+    <label class="switch">
+      <input type="checkbox" id="toggle">
+      <span class="toggle round"></span>
+    </label>
+  </div>
+
+
   <script src="js/three.min.js"></script>
+  <!-- <script src="js/ObjectLoader.js"></script> -->
   <script src="js/main.js"></script>
 </body>
 </html>

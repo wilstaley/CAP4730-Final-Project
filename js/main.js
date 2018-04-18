@@ -11,15 +11,105 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-//Add objects to the scene
+
+
+//Add light to the scene
+var light = new THREE.AmbientLight( 0xf0f0f0 ); // soft white light
+scene.add( light );
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position = (0,0,1);
+scene.add( directionalLight );
+
+
+//Add torus to the scene
 var geometry = new THREE.TorusKnotBufferGeometry( 10, 3, 200, 16, 20, 3);
 var material = new THREE.MeshNormalMaterial();
 var knot = new THREE.Mesh( geometry, material );
 scene.add( knot );
 
-
 knot.position.z = -50;
 camera.position.z = 5;
+
+var text1 = new THREE.Mesh();
+var text2 = new THREE.Mesh();
+
+//Add text to the scene
+var loader = new THREE.FontLoader();
+
+loader.load( 'font.json', function ( font ) {
+
+	var U = new THREE.TextGeometry( 'U', {
+		font: font,
+		size: 8,
+		height: 20,
+		curveSegments: 2,
+	} );
+
+	var F = new THREE.TextGeometry( 'F', {
+		font: font,
+		size: 8,
+		height: 20,
+		curveSegments: 2,
+	} );
+
+	var textMaterial1 = new THREE.MeshLambertMaterial({
+		wireframe: false,
+		color: 0xff963a
+	});
+	textMaterial1.needsUpdate = true;
+	var textMaterial2 = new THREE.MeshLambertMaterial({
+		wireframe: false,
+		color: 0x3657f9
+	});
+
+	text1 = new THREE.Mesh( U, textMaterial1 );
+	text1.visible = false;
+	scene.add(text1);
+	text2 = new THREE.Mesh( F, textMaterial2 );
+	text2.visible = false;
+	scene.add(text2);
+	// var pos = new THREE.Vector3(0,0,0);
+	// text.position = pos;
+	text1.position.z = -50;
+	text1.position.x = -4;
+	text1.position.y = -2;
+	text2.position.z = -50;
+	text2.position.x = 1;
+	text2.position.y = -2;
+});
+
+// // instantiate a loader
+// var loader = new THREE.OBJLoader();
+//
+// // load a resource
+// loader.load(
+// 	// resource URL
+// 	'plant.obj',
+// 	// called when resource is loaded
+// 	function ( object ) {
+//
+// 		scene.add( object );
+//
+// 	},
+// 	// called when loading is in progresses
+// 	function ( xhr ) {
+//
+// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+//
+// 	},
+// 	// called when loading has errors
+// 	function ( error ) {
+//
+// 		console.log( 'An error happened' );
+//
+// 	}
+// );
+//
+// // Alternatively, to parse a previously loaded JSON structure
+// var object = loader.parse( a_json_object );
+//
+// scene.add( object );
+
 
 var animate = function () {
 	requestAnimationFrame( animate );
@@ -81,4 +171,38 @@ farSlider.oninput = function() {
     //change the camera's near clipping plane
 		camera.far = parseInt(this.value);
     camera.updateProjectionMatrix();
+}
+
+
+//Changing between models
+var select = document.getElementById("model-select");
+select.addEventListener("change", ()=>{
+	var selectedModel = select.options[select.selectedIndex].value;
+	if(selectedModel === "torus"){
+		text1.visible = false;
+		text2.visible = false;
+		knot.visible = true;
+		toggleWireframe();
+	}
+	else if(selectedModel === "text"){
+		knot.visible = false;
+		text1.visible = true;
+		text2.visible = true;
+		toggleWireframe();
+	}
+})
+
+
+//Toggle wireframe on/off
+var toggle = document.getElementById("toggle");
+toggle.addEventListener('click', toggleWireframe);
+
+function toggleWireframe(){
+	if(text1.visible){
+		text1.material.setValues({wireframe: toggle.checked});
+		text2.material.setValues({wireframe: toggle.checked});
+	}
+	else if(knot.visible){
+		knot.material.setValues({wireframe: toggle.checked});
+	}
 }
