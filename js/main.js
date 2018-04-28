@@ -53,6 +53,7 @@ var plant_texture = loader.load(
 );
 
 var id;
+var toggle = document.getElementById("toggle");
 function showPlant(display){
 	var objLoader = new THREE.OBJLoader();
 	objLoader.load('plant.obj',
@@ -62,7 +63,7 @@ function showPlant(display){
 		    obj.traverse(function (child) {
 		        if (child instanceof THREE.Mesh) {
 		            child.material = new THREE.MeshLambertMaterial(
-									{map: plant_texture});
+									{map: plant_texture, wireframe: toggle.checked});
 		        }
 		    });
 				obj.position.z = -50;
@@ -179,7 +180,6 @@ select.addEventListener("change", ()=>{
 
 
 //Toggle wireframe on/off
-var toggle = document.getElementById("toggle");
 toggle.addEventListener('click', toggleWireframe);
 
 function toggleWireframe(){
@@ -189,6 +189,10 @@ function toggleWireframe(){
 	else if(cube.visible){
 		cube.material.setValues({wireframe: toggle.checked});
 	}
+	else if(!knot.visible && !cube.visible){
+		showPlant(false);
+		showPlant(true);
+	}
 }
 
 var light = new THREE.AmbientLight( 0xaaaaaa ); // soft white light
@@ -197,66 +201,3 @@ scene.add( light );
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 scene.add( directionalLight );
 directionalLight.position.set(0,0,1);
-
-
-
-
-
-//TODOS===================================================
-//Add light to the scene
-// var light = new THREE.AmbientLight( 0xf0f0f0 ); // soft white light
-// scene.add( light );
-// var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-// directionalLight.position = (0,0,1);
-// scene.add( directionalLight );
-//========================================================
-//========================================================
-// var text1 = new THREE.Mesh();
-// var text2 = new THREE.Mesh();
-//
-// //Add text to the scene
-// var loader = new THREE.FontLoader();
-//
-// loader.load( 'font.json', function ( font ) {
-//
-// 	var U = new THREE.TextGeometry( 'U', {
-// 		font: font,
-// 		size: 8,
-// 		height: 20,
-// 		curveSegments: 2,
-// 	} );
-//
-// 	var F = new THREE.TextGeometry( 'F', {
-// 		font: font,
-// 		size: 8,
-// 		height: 20,
-// 		curveSegments: 2,
-// 	} );
-//
-// 	var textMaterial1 = new THREE.MeshLambertMaterial({
-// 		wireframe: false,
-// 		color: 0xff963a
-// 	});
-// 	textMaterial1.needsUpdate = true;
-// 	var textMaterial2 = new THREE.MeshLambertMaterial({
-// 		wireframe: false,
-// 		color: 0x3657f9
-// 	});
-//
-// 	text1 = new THREE.Mesh( U, textMaterial1 );
-// 	text1.visible = false;
-// 	scene.add(text1);
-// 	text2 = new THREE.Mesh( F, textMaterial2 );
-// 	text2.visible = false;
-// 	scene.add(text2);
-// 	// var pos = new THREE.Vector3(0,0,0);
-// 	// text.position = pos;
-// 	text1.position.z = -50;
-// 	text1.position.x = -4;
-// 	text1.position.y = -2;
-// 	text2.position.z = -50;
-// 	text2.position.x = 1;
-// 	text2.position.y = -2;
-// });
-//========================================================
-//========================================================
