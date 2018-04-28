@@ -1,4 +1,4 @@
-body{
+html, body{
   margin: 0;
   overflow: hidden;
 }
@@ -23,8 +23,9 @@ canvas{
 #meshbtn{
   width: 100px;
   position: absolute;
-  top: 0;
-  left: calc(50% - 30px);
+  top: 92%;
+  /* left: calc(50% - 30px); */
+  left: 85%
 }
 
 #fovslider{
